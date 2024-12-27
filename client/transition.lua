@@ -55,11 +55,6 @@ exports("Transition", Transition)
 
 RegisterNetEvent('0xHud:Transition')
 AddEventHandler('0xHud:Transition', function(teleportPosition, WaitTime)
-    ShowRaceCountdown(teleportPosition, WaitTime)
+    Transition(teleportPosition, WaitTime)
 end)
 
-
-RegisterCommand('startloadingscreen', function()
-    local teleportPosition = vector4(-1668.1702, -2938.2090, 13.9445, 0.0)
-    Transition(teleportPosition, 2000)
-end, false)

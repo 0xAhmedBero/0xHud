@@ -132,11 +132,11 @@ end)
 
 ---@param text string
 ---@param beep boolean
----@param duration number
+---@param duration number in second
 function SendHelpText(text, beep, duration)
     BeginTextCommandDisplayHelp("STRING")
     AddTextComponentSubstringPlayerName(text)
-    EndTextCommandDisplayHelp(0, false, beep, tonumber(duration))    
+    EndTextCommandDisplayHelp(0, false, beep, tonumber(duration * 1000))    
 end
 exports("SendHelpText", SendHelpText)
 
@@ -254,7 +254,7 @@ end
 ---@param currentXPLimit number
 ---@param AddXP number
 ---@param rank number
----@param onScreenDuration number
+---@param onScreenDuration number -- Duration in seconds
 ---@param customColor number
 function SetRankAndXP(currentXPLimit, AddXP, rank, onScreenDuration, customColor)
     -- local currentXPLimit = 4514
@@ -309,13 +309,12 @@ function SetRankAndXP(currentXPLimit, AddXP, rank, onScreenDuration, customColor
         EndScaleformMovieMethod()
         NextRank, NextXP, oldRank, oldXp = GetNextRank(NextRank)
         Wait(1150)
-        PlaySoundFrontend(-1, "RANK_UP", "HUD_AWARDS", 1)
+        if Config.RanksAndXPSound == true then
+            PlaySoundFrontend(-1, "RANK_UP", "HUD_AWARDS", 1)
+        end
     end
-    print(counter)
 
-    
-
-    Wait(onScreenDuration)
+    Wait(onScreenDuration * 1000)
     RemoveScaleformScriptHudMovie(19)
 end
 exports("SetRankAndXP", SetRankAndXP)
@@ -324,10 +323,6 @@ RegisterNetEvent('0xHud:SetRankAndXP')
 AddEventHandler('0xHud:SetRankAndXP', function(currentXPLimit, AddXP, rank, onScreenDuration, customColor)
     SetRankAndXP(currentXPLimit, AddXP, rank, onScreenDuration, customColor)
 end)
-
-RegisterCommand("testhud", function ()
-    SetRankAndXP(14872, 3000, 9, 5000, 26)
-end, false)
 
 ---@param Title string
 ---@param Subtitle string
@@ -366,10 +361,11 @@ AddEventHandler('0xHud:ShowWinMessage', function(Title, Subtitle, TitleColor, ba
     ShowWinMessage(Title, Subtitle, TitleColor, backgroundColor, Duration)
 end)
 
-
-
-
-
+--- Race Countdown 
+---@param r number min 0 max 255
+---@param g number min 0 max 255
+---@param b number min 0 max 255
+---@return boolean -- return true when finish
 function ShowRaceCountdown(r, g, b)
     if r and g and b then 
         local r, g, b = r, g, b
@@ -448,6 +444,7 @@ function ShowRaceCountdown(r, g, b)
         Wait(0)
     end
     SetScaleformMovieAsNoLongerNeeded(scaleform)
+    return true
 end
 exports("ShowRaceCountdown", ShowRaceCountdown)
 
@@ -456,6 +453,11 @@ AddEventHandler('0xHud:ShowRaceCountdown', function(r, g, b)
     ShowRaceCountdown(r, g, b)
 end)
 
+---comment
+---@param Title string
+---@param Desc strin
+---@param Desc2 string
+---@param displayTime number in seconds
 function ShowUnlockMessage(Title, Desc, Desc2, displayTime)
     local scaleform = RequestScaleformMovie("mp_unlock_freemode")
 
@@ -477,7 +479,7 @@ function ShowUnlockMessage(Title, Desc, Desc2, displayTime)
     EndScaleformMovieMethod()
 
     Citizen.CreateThread(function()
-        local displayTime = displayTime
+        local displayTime = displayTime * 1000
         local currentTime = GetGameTimer()
 
         while GetGameTimer() - currentTime < displayTime do
@@ -601,3 +603,14 @@ RegisterNetEvent('0xHud:RemoveCircle')
 AddEventHandler('0xHud:RemoveCircle', function(id, circle)
     RemoveCircle(id, circle)
 end)
+
+
+RegisterCommand("test0xhud", function ()
+    --SetRankAndXP(14872, 3000, 9, 5000, 26)
+    --ShowWinMessage("Title", "Subtitle", 27, 25, 3)
+    --ShowUnlockMessage("Title", "Desc", "Desc2", 3)
+    --SendXpNotify("title", "subTitle", 200)
+    --SendHelpText("text", true, 6)
+    --SendAdvancedNotification("title", "subTitle", "pngHash", "message", true)
+    --SetWanted(6)
+end, false)

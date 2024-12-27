@@ -227,21 +227,16 @@ function formatTime(seconds) {
   return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 }
 
-
+// tests
 // createProgressBar("5FAFA", 'طعام', 50, [255, 133, 85]);
-
 // createText("daeheaa", 'المال', "€500000", [53, 154, 71]);
-
 // createCircles("KHKHKTZ", 'إمداد', 10, [155, 155, 155, 0.5]);
 // updateCircle("KHKHKTZ", 1, [93, 182, 229, 1])
 // updateCircle("KHKHKTZ", 2, [235, 36, 39, 1])
 // updateCircle("KHKHKTZ", 3, [53, 154, 71, 1])
 // killCircle("KHKHKTZ", 1)
-
 // createTimerProgressBar("FAFAHTJ", 'موقت', 100, [93, 182, 229]);
-
-createCountdownTimer("KGKSZT", 'موقت', 100, [93, 182, 229]);
-
+// createCountdownTimer("KGKSZT", 'موقت', 100, [93, 182, 229]);
 // setTimeout(() => {
 //     removeCircle("KHKHKTZ", 2)
 // }, 2000); 
