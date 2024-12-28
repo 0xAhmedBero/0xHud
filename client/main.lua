@@ -146,12 +146,12 @@ AddEventHandler('0xHud:SendHelpText', function(text, beep, duration)
 end)
 
 ---@param text string
----@param duration number -- time in milliseconds
+---@param duration number -- time in seconds
 ---@param drawImmediately boolean
 function SendPrintText(text, duration, drawImmediately)
     BeginTextCommandPrint("STRING")
     AddTextComponentString(text)
-    EndTextCommandPrint(duration, drawImmediately)
+    EndTextCommandPrint((duration * 1000), drawImmediately)
 end
 exports("SendPrintText", SendPrintText)
 
@@ -455,7 +455,7 @@ end)
 
 ---comment
 ---@param Title string
----@param Desc strin
+---@param Desc string
 ---@param Desc2 string
 ---@param displayTime number in seconds
 function ShowUnlockMessage(Title, Desc, Desc2, displayTime)
